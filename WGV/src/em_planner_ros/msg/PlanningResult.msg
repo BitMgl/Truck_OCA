@@ -1,2 +1,0 @@
-TrajectoryPoint[] trajectory
-
