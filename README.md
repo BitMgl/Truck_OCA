@@ -19,3 +19,10 @@ rosrun em_planner_ros environment_publisher_node
 
 ```
 
+roslaunch启动方式
+
+```
+roslaunch show_planning_results_simple visualizer.launch 
+
+
+```
