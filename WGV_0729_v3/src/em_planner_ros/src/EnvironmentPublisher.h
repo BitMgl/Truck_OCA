@@ -6,24 +6,32 @@
 #include "em_planner_ros/ObstacleList.h"
 #include "em_planner_ros/Obstacle.h"
 #include "em_planner_ros/Localization.h"
-#include <utility>
+#include <tuple>
+
+using ObstacleInfo = std::tuple<double /*s*/, double /*l*/, double /*yaw_offset*/>;
 
 class EnvironmentPublisher
 {
 public:
 
+  /* 1. 默认：3 个障碍物 + 主车起点 (5 m, 0 m) */
   EnvironmentPublisher(ros::NodeHandle& nh)
-    : EnvironmentPublisher(nh, {{50.0,0.0}, {110.0,-3.5}, {68.0,3.5}}) {}
+      : EnvironmentPublisher(nh,
+                             {{50.0, 0.0, 0.0},
+                              {110.0, -3.5, 0.0},
+                              {68.0, 3.5, 0.0}},
+                             5.0, 0.0) {}
 
-  // 带参：外部给定 (s,l)
+  // 带参：外部任意 (s,l,yaw)
+    // 2. 任意 (s,l,yaw) 列表
   EnvironmentPublisher(
       ros::NodeHandle& nh,
-      const std::vector<std::pair<double,double>>& obs_sl)
-      : scenario_(obs_sl)   // 直接构造 sce4
-  {
-    reference_line_pub_  = nh.advertise<em_planner_ros::PlanningResult>("reference_line",1,true);
-    obstacle_list_pub_   = nh.advertise<em_planner_ros::ObstacleList>("obstacle_list",1,true);
-    localization_pub_    = nh.advertise<em_planner_ros::Localization>("localization",1,true);
+      const std::vector<ObstacleInfo>& obs_info,
+      double ego_s, double ego_l)
+      : scenario_(obs_info, ego_s, ego_l){
+    reference_line_pub_  = nh.advertise<em_planner_ros::PlanningResult>("reference_line", 1, true);
+    obstacle_list_pub_   = nh.advertise<em_planner_ros::ObstacleList>("obstacle_list", 1, true);
+    localization_pub_    = nh.advertise<em_planner_ros::Localization>("localization", 1, true);
     ROS_INFO("Generating scenario...");
   }
 

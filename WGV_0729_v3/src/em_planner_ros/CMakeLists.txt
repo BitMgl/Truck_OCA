@@ -81,7 +81,6 @@ add_executable(environment_publisher_node
     scenario/src/sce1.cpp
     scenario/src/sce2.cpp
     scenario/src/sce3.cpp
-    scenario/src/sce4.cpp
     common/cartesian_frenet_conversion.cc
     common/discrete_points_math.cc
 )

@@ -6,6 +6,7 @@
 
 #include "em_planner_ros/PlanningResult.h"
 #include "em_planner_ros/TrajectoryPoint.h"
+#include "em_planner_ros/Localization.h"
 #include "em_planner_ros/ObstacleList.h"
 #include "em_planner_ros/Obstacle.h"
 
@@ -23,9 +24,6 @@ public:
     {
         ros::NodeHandle nh;
 
-        // // 创建 tf 广播器
-        // broadcaster_ = std::make_unique<tf::TransformBroadcaster>();
-
         // 订阅qp路径规划话题
         qp_path_sub_ = nh.subscribe("/qp_planning_result", 1, &PathVisualizer::qp_pathCallback, this);
         // 订阅dp路径规划话题（之后补充）
@@ -34,12 +32,15 @@ public:
         refline_sub_ = nh.subscribe("/reference_line", 1, &PathVisualizer::reflineCallback, this);
         // 订阅障碍物话题
         obs_sub_ = nh.subscribe("/obstacle_list", 1, &PathVisualizer::obsCallback, this);
+        // 订阅自车话题
+        ego_sub_ = nh.subscribe("/localization", 1, &PathVisualizer::egoCallback, this);
 
         // 发布 Marker 以便 RViz 显示路径
-        marker_qp_path_pub_ = nh.advertise<visualization_msgs::Marker>("visualization_qp_path", 1);
-        marker_dp_path_pub_ = nh.advertise<visualization_msgs::Marker>("visualization_dp_path", 1);
-        marker_refline_pub_ = nh.advertise<visualization_msgs::Marker>("visualization_refline", 1);
-        marker_obs_pub_ = nh.advertise<visualization_msgs::Marker>("visualization_obs", 1);
+        marker_qp_path_pub_ = nh.advertise<visualization_msgs::Marker>("visualization_qp_path", 10);
+        marker_dp_path_pub_ = nh.advertise<visualization_msgs::Marker>("visualization_dp_path", 10);
+        marker_refline_pub_ = nh.advertise<visualization_msgs::Marker>("visualization_refline", 10);
+        marker_obs_pub_ = nh.advertise<visualization_msgs::Marker>("visualization_obs", 10);
+        marker_ego_pub_ = nh.advertise<visualization_msgs::Marker>("visualization_ego", 10);
 
         // 创建一个定时器来定期发布地图坐标变换
         timer_ = nh.createTimer(ros::Duration(0.1), &PathVisualizer::publishMapTransform, this); // 每0.1秒发布一次
@@ -209,16 +210,66 @@ public:
     }
     }
 
+    void egoCallback(const em_planner_ros::Localization::ConstPtr& msg){
+        // 获取自车位置和尺寸
+        double x_center = msg->xg;
+        double y_center = msg->yg;
+        double theta = msg->yaw;
+        double width = 2;
+        double length = 4;
+        double height = 1.5;
+
+        // 创建 Marker 消息
+        visualization_msgs::Marker cube_marker;
+        cube_marker.header.frame_id = "map";  // 使用 RViz 中的坐标系
+        cube_marker.header.stamp = ros::Time::now();
+        cube_marker.ns = "ego_car";
+        cube_marker.id = 0;  
+        cube_marker.type = visualization_msgs::Marker::CUBE;
+        cube_marker.action = visualization_msgs::Marker::ADD;
+
+        // 设置自车的位置
+        cube_marker.pose.position.x = x_center;
+        cube_marker.pose.position.y = y_center;
+        cube_marker.pose.position.z = height / 2;  // 设置在 z 轴上稍微抬高
+
+        // 设置自车方向（绕 z 轴旋转）
+        tf2::Quaternion q;
+        q.setRPY(0, 0, theta);  // 仅绕 Z 轴旋转
+        cube_marker.pose.orientation.x = q.x();
+        cube_marker.pose.orientation.y = q.y();
+        cube_marker.pose.orientation.z = q.z();
+        cube_marker.pose.orientation.w = q.w();
+
+        // 设置自车的尺寸
+        cube_marker.scale.x = length;
+        cube_marker.scale.y = width;
+        cube_marker.scale.z = height;
+
+        // 设置颜色和透明度
+        cube_marker.color.r = 1.0f;
+        cube_marker.color.g = 0.5f;  
+        cube_marker.color.b = 0.0f;
+        cube_marker.color.a = 0.7;
+
+        cube_marker.lifetime = ros::Duration(0);  // 永久显示
+
+        // 发布 Marker
+        marker_ego_pub_.publish(cube_marker);
+    }
+
 private:
     ros::Subscriber qp_path_sub_;
     ros::Subscriber dp_path_sub_;
     ros::Subscriber refline_sub_;
     ros::Subscriber obs_sub_;
+    ros::Subscriber ego_sub_;
 
     ros::Publisher marker_dp_path_pub_;
     ros::Publisher marker_qp_path_pub_;
     ros::Publisher marker_refline_pub_;
     ros::Publisher marker_obs_pub_;
+    ros::Publisher marker_ego_pub_;
 
     // 定时器对象，用于定期发布变换
     ros::Timer timer_;

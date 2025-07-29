@@ -10,6 +10,7 @@ Panels:
         - /Marker2
         - /Marker3
         - /Marker4
+        - /Marker5
       Splitter Ratio: 0.5
     Tree Height: 549
   - Class: rviz/Selection
@@ -41,7 +42,7 @@ Visualization Manager:
       Cell Size: 1
       Class: rviz/Grid
       Color: 160; 160; 164
-      Enabled: true
+      Enabled: false
       Line Style:
         Line Width: 0.029999999329447746
         Value: Lines
@@ -54,7 +55,7 @@ Visualization Manager:
       Plane: XY
       Plane Cell Count: 10
       Reference Frame: <Fixed Frame>
-      Value: true
+      Value: false
     - Class: rviz/Marker
       Enabled: true
       Marker Topic: /visualization_qp_path
@@ -87,6 +88,14 @@ Visualization Manager:
         qp_path: true
       Queue Size: 100
       Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /visualization_ego
+      Name: Marker
+      Namespaces:
+        ego_car: true
+      Queue Size: 100
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -115,7 +124,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 86.12761688232422
+      Distance: 78.93780517578125
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -123,9 +132,9 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: 0
-        Y: 0
-        Z: 0
+        X: -19.439769744873047
+        Y: 5.475986003875732
+        Z: 9.87389087677002
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
@@ -152,4 +161,4 @@ Window Geometry:
     collapsed: false
   Width: 1522
   X: 385
-  Y: 404
+  Y: 367
