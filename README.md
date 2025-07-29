@@ -5,6 +5,7 @@
 障碍物/自车自定义
 
 ```
+<EnvironmentPublisher.cpp>
 std::vector<ObstacleInfo> my_obs = 
 // s - l - yaw in frenet coordination 
 {{40.0, 0.0, -0.3},{50.0, 3.5, 0.0},{75.0, 0, 0.2},{95.0, 0, 0.0}};
