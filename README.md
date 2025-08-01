@@ -50,3 +50,7 @@ roslaunch show_planning_results_simple visualizer.launch
 ```
 sudo apt install libyaml-cpp-dev
 ```
+
+# 0801_v2更新
+
+修改emplanner.cpp sl_dp.cpp和h，构造qp问题的约束函数getcovexBound，将障碍物实际尺寸加入到求解代码中。
