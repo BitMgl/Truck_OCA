@@ -38,13 +38,13 @@ roslaunch show_planning_results_simple visualizer.launch
 
 
 ```
-# 0731更新日志
+# 0731-0801更新日志
 
 1.规划起点用用实际定位，使用rqt发布/localization来实现
 
 2.发布的参考轨迹/reference_line包含了固定的速度（20，在environmentpublisher.h文件中定义）。（但emplanner给出的qppath和dppath还是没有速度）
 
-3.添加yaml支持，用于调参emplanner参数。
+3.添加yaml支持，用于调参emplanner参数。（0801更新修改yaml的bug）
 
 使用前安装yaml-cpp（正常来说是预装的）
 ```
