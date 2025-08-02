@@ -54,3 +54,7 @@ sudo apt install libyaml-cpp-dev
 # 0801_v2更新
 
 修改emplanner.cpp sl_dp.cpp和h，构造qp问题的约束函数getcovexBound，将障碍物实际尺寸加入到求解代码中。
+
+# 0802_v1更新
+
+修改main2，输出speed规划的速度。规划速度在topic/qp_speed_result中
