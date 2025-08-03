@@ -58,3 +58,9 @@ sudo apt install libyaml-cpp-dev
 # 0802_v1更新
 
 修改main2，输出speed规划的速度。规划速度在topic/qp_speed_result中
+
+# 0803_v1更新
+
+小车会动了。
+
+
