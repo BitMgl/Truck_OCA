@@ -63,4 +63,4 @@ sudo apt install libyaml-cpp-dev
 
 小车会动了。
 
-![](docs/20250803_154929.mp4)
+![](docs/20250803_154929~2.gif)
