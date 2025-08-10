@@ -54,7 +54,7 @@ sudo apt install libyaml-cpp-dev
 ![示意图](docx/20250803.gif)
 
 
-#0808_V3更新
+# 0808_V3更新
 
 添加了障碍物未来位置预测，使用障碍物yaw+v预测的。
 
