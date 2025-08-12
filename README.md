@@ -1,5 +1,8 @@
 # Truck_OCA
 
+# FEISHU
+https://fcnx730f4gdh.feishu.cn/docx/QoMVdFQrjoNzwAxMgXWcs0ABnrh?from=from_copylink
+
 # Planner使用
 
 emplanner功能包放置于工作空间/src文件夹下。
@@ -84,3 +87,10 @@ sudo apt install libyaml-cpp-dev
 2）规则后处理模块
 
 3）st相关yaml
+
+# 0812 
+
+1) 添加小车接口，实现rosbag play
+
+2) 增加规划起点选择判定
+
