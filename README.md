@@ -94,3 +94,9 @@ sudo apt install libyaml-cpp-dev
 
 2) 增加规划起点选择判定
 
+# 0816
+
+运行流程 
+
+1) roslaunch show---- visualize-----
+2) rosbag play 6.bag
