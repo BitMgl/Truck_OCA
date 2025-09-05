@@ -96,23 +96,35 @@ sudo apt install libyaml-cpp-dev
 
 # 0905 实车测试相关指令
 
-## 启动底盘
+启动底盘
+
+```
 cd UGV
 source roscore_ins.sh
 
-## 规划模块 （现阶段还需要修改bit_planner/config/road_ref中的参考路径）
+```
+规划模块 （现阶段还需要修改bit_planner/config/road_ref中的参考路径）
+
+```
 cd WGV
 catkin build 
 chmod +x start_plan.sh
 ./start_plan.sh
 
-## 录制 + 命名
+```
+录制 + 命名
+
+```
 rosbag record /chassis /odomData /obstacle_list /qp_planning_result /qp_speed_result
 
-## 回放
+```
+回放
+
+```
 rosbag play xxx --topics /odomData
 
-运行流程 
+```
+
 
 1) roslaunch show---- visualize-----
 2) rosbag play 6.bag
