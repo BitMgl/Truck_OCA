@@ -126,5 +126,3 @@ rosbag play xxx --topics /odomData
 ```
 
 
-1) roslaunch show---- visualize-----
-2) rosbag play 6.bag
